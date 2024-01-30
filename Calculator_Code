@@ -1,0 +1,25 @@
+Code Kalkulasi
+           ZL = app.ImpedansiBebanZLEditField.Value;
+           Z0 = app.ImpedansiKarakteristikZ0EditField.Value;
+           ZLimaj = app.jEditField.Value;
+           %impedansi Normalisasi
+           zl = ZL/Z0;
+           zlimaj = ZLimaj/Z0;
+           app.ImpedansiNormalisasiEditField.Value = zl;
+           app.jEditField_2.Value = zlimaj;
+           %pencarian VSWR, return loss dan koefisien refleksi
+           zl2 = (ZL + ZLimaj*1i)/Z0;
+           g = (zl2-1)/(zl2+1);
+           m = abs(g);
+           th = angle(g);
+           thd = th * 180/pi;
+           %koef refleksi
+           app.MagnitudeEditField.Value = m;
+           app.SudutEditField.Value = thd;
+           %swr
+           SWR = (1 + m)/(1 - m + eps);
+           app.VSWREditField.Value = SWR;
+          
+          
+           draw_smith_chart
+           polar(th, m, 'r*');
